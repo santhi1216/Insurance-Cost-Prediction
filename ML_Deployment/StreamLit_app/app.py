@@ -1,10 +1,19 @@
 import streamlit as st
+import pandas as pd
 import numpy as np
 import sys
 import os
+import joblib
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from Utils.model_loader import model
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MODEL_PATH = os.path.join(BASE_DIR, "Model", "model.joblib")
+
+@st.cache_resource
+def load_model():
+    return joblib.load(MODEL_PATH)
+
+model = load_model()
 
 # title
 st.title("Insurance Cost PRediction app")
@@ -23,9 +32,16 @@ surgeries = st.selectbox("Number of Major Surgeries", [0, 1, 2, 3])
 
 # Predict button
 if st.button("PRedict premium price"):
-    features = np.array([[age, diabetes, bp, transplants,
-        chronic, allergies, cancer,
-        surgeries, bmi]])
+    features = pd.DataFrame({
+        "Age": [age],
+        "Diabetes": [diabetes],
+        "BloodPressureProblems": [bp],
+        "AnyTransplants": [transplants],
+        "AnyChronicDiseases": [chronic],
+        "KnownAllergies": [allergies],
+        "HistoryOfCancerInFamily": [cancer],
+        "NumberOfMajorSurgeries": [surgeries],
+        "BMI": [bmi]
+        })
     prediction = model.predict(features)[0]
     st.success(f'Estimated Premium Price cost :{round(prediction, 2)}')
-

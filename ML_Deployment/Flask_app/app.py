@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request
 from joblib import load
 import numpy as np
-from Utils.model_loader import model
+import os
+from utils.model_loader import model
 
 app = Flask(__name__)
 @app.route("/")
@@ -46,4 +47,5 @@ def predict():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)

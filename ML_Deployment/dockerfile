@@ -1,0 +1,22 @@
+# Base image
+FROM python:3.11-slim
+# set the working directory 
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    gcc \
+    python3-dev
+WORKDIR /app
+# copy requirements file into docker container
+COPY requirements.txt requirements.txt
+# install python dendencies
+RUN pip install --no-cache-dir -r requirements.txt
+# Copy the rest of the application code into the container
+COPY . .
+RUN ls -R
+#Expose port 5000, which is the default port for flask
+EXPOSE 5000
+#Define the command to run the flask application
+ENV PYTHONPATH=/app
+CMD ["python", "-m", "flask_app.app"]
+
+
