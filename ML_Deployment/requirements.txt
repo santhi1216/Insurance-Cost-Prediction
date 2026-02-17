@@ -5,3 +5,6 @@ scipy==1.15.3
 scikit-learn==1.8.0
 lightgbm==4.6.0
 joblib==1.5.3
+fastapi
+uvicorn[standard]
+

@@ -4,6 +4,7 @@ from typing import Literal
 from joblib import load
 import numpy as np
 import pandas as pd
+import os
 from utils.model_loader import model
 app = FastAPI(title="Insurance Premium Predictor API")
 
@@ -58,3 +59,6 @@ def Predict(data:InsuranceInput):
     except Exception as e:
         return {"error": str(e)}
 
+if __name__ == '__main__':
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
