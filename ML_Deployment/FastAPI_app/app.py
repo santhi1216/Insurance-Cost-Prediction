@@ -1,9 +1,10 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from typing import Literal
 from joblib import load
 import numpy as np
 import pandas as pd
-from Utils.model_loader import model
+from utils.model_loader import model
 app = FastAPI(title="Insurance Premium Predictor API")
 
 feature_names = ['Age', 'Diabetes', 'BloodPressureProblems', 'AnyTransplants',
@@ -13,15 +14,15 @@ feature_names = ['Age', 'Diabetes', 'BloodPressureProblems', 'AnyTransplants',
 #Input schema
 
 class InsuranceInput(BaseModel):
-    Age : float
-    Diabetes : int
-    BloodPressureProblems : int
-    AnyTransplants: int
-    AnyChronicDiseases: int
-    KnownAllergies: int
-    HistoryOfCancerInFamily:int
-    NumberOfMajorSurgeries:int
-    BMI:float
+    Age: float = Field(...,ge=1,le=100)
+    Diabetes: Literal[0, 1]
+    BloodPressureProblems: Literal[0, 1]
+    AnyTransplants: Literal[0, 1]
+    AnyChronicDiseases: Literal[0, 1]
+    KnownAllergies: Literal[0, 1]
+    HistoryOfCancerInFamily: Literal[0, 1]
+    NumberOfMajorSurgeries: Literal[0,1,2]
+    BMI: float = Field(...,ge=10,le=60)
 
 # Home Route
 @app.get("/")
@@ -50,7 +51,7 @@ def Predict(data:InsuranceInput):
         prediction = model.predict(df)[0]
 
         return{
-            "PRedicted_insurance_cost" : round(float(prediction),2)
+            "Predicted_insurance_cost" : round(float(prediction),2)
         }
 
 

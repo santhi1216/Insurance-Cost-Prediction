@@ -16,7 +16,7 @@ def load_model():
 model = load_model()
 
 # title
-st.title("Insurance Cost PRediction app")
+st.title("Insurance Cost Prediction app")
 st.write("Enter the health details to predict premium price")
 
 # input fields
@@ -31,7 +31,7 @@ cancer = st.selectbox("History of Cancer in Family", [0, 1])
 surgeries = st.selectbox("Number of Major Surgeries", [0, 1, 2, 3])
 
 # Predict button
-if st.button("PRedict premium price"):
+if st.button("Predict premium price"):
     features = pd.DataFrame({
         "Age": [age],
         "Diabetes": [diabetes],
