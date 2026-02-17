@@ -7,5 +7,5 @@ lightgbm==4.6.0
 joblib==1.5.3
 fastapi
 uvicorn[standard]
-joblib
+
 
