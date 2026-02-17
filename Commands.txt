@@ -1,0 +1,47 @@
+Fast API
+
+uvicorn FastAPI_app.app:app --reload
+
+Flask API
+
+python -m Flask_app.app
+ 	
+
+git code changes commit:
+
+git status
+
+git add .
+
+git commit -m "msg"
+
+git push origin main
+
+docker build -t insurance-app .
+
+docker ps: to check the container id
+
+Port mapping:
+
+docker run -p 5000:5000 insurance-app
+
+test : http://localhost:5000
+
+Push to docker hub
+
+docker login
+
+username and pwd enter
+
+docker images
+
+insurance-app:latest
+
+docker image name tagging using docker format:
+
+docker tag insurance-app yourusername/insurance-app
+
+docker push
+
+docker pull lsanthi/insurance-app
+
